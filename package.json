@@ -1,0 +1,28 @@
+{
+  "name": "mercafacil",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon ./src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GuiTonel/mercafacilTeste.git"
+  },
+  "author": "nagutao",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GuiTonel/mercafacilTeste/issues"
+  },
+  "homepage": "https://github.com/GuiTonel/mercafacilTeste#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "nodejs": "0.0.0",
+    "pg": "^8.3.3"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
+}
