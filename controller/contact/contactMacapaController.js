@@ -1,10 +1,10 @@
 const contactModel = require('../../model/contactModel')
 
-const ContactController = require('./contactController')
-const DatabasePgController = require('../database/databasePgController')
+const DatabaseController = require('../database/databaseMacapaController')
 
 class ContactMacapaController{
     phoneMacapa = new RegExp(/[0-9]{12,13}/)
+    database = DatabaseController
 
     createModel( contactsJson = [] ) {
         var contactsModel = []
@@ -22,9 +22,9 @@ class ContactMacapaController{
                     index: index
                 } )
             } else {
-                contact = new contactModel
+                contact = Object.create(contactModel)
                 contact.name = contactJson.name.toUpperCase()
-                contact.cellphone = processCellphoneNumber(contactJson.cellphone)
+                contact.cellphone = this.processCellphoneNumber(contactJson.cellphone)
     
                 contactsModel.push( contact )
             }
@@ -48,16 +48,6 @@ class ContactMacapaController{
         }
             
         return `${ countryCode } (${ddd}) ${firstNumberPart}-${secondNumberPart}` 
-    }
-
-    async insertMacapaContacts( req, res ) {
-        var contacts = this.createModel( req.body.contacts )
-        try {
-            ContactController.insertContacts( contacts, DatabasePgController )
-        } catch (err) {
-            return res.status(400).send('Error in insert contacts!')
-        }
-        return res.status(200).send('Success in insert contacts!')
     }
 }
 

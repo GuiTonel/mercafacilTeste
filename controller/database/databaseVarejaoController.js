@@ -17,6 +17,7 @@ class DatabasePgController {
         } catch( err ) {
             console.error(err)
         }
+        this.createDatabaseTables()
     }
 
     async createDatabaseTables(){
@@ -28,7 +29,6 @@ class DatabasePgController {
     }
 
     async insertContact( contact = {} ){
-        console.log('c')
         return client.query(fs.readFileSync('sql/insert-contact.sql').toString(), [ contact.name, contact.cellphone ], ( err, res ) => {
             if (err) throw err
 
