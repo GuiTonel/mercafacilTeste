@@ -1,0 +1,1 @@
+from .client_schema import User
