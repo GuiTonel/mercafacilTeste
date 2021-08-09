@@ -7,19 +7,18 @@ FLASK_DEBUG = 'FLASK_DEBUG'
 SERVER_CONFIG_FILENAME = 'SERVER_CONFIG_FILENAME'
 FLASK_INSTANCE_RELATIVE_CONFIG = 'FLASK_INSTANCE_RELATIVE_CONFIG'
 
-### ANALISA ESSA PORRA IRMAO
-
 def create_app():
-    load_dotenv('config/.env')
+    load_dotenv('.env')
 
     app = Flask(__name__)
 
-    app.config.from_file( os.getenv( SERVER_CONFIG_FILENAME ), load=json.load )
+    from src.database import create_db
+    create_db()
 
-    from routes import config_routes
+    from src.routes import config_routes
     config_routes(app)
 
-    from error import config_error_handler
+    from src.error import config_error_handler
     config_error_handler(app)
 
     return app

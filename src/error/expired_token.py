@@ -1,6 +1,6 @@
 class ExpiredToken(Exception):
     def __init__( self, msg ):
-        self.__init__( msg )
+        self.msg = msg
         self.status = 401
     
     def to_response( self ):

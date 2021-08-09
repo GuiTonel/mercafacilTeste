@@ -1,6 +1,6 @@
 class UserNotFound(Exception):
     def __init__( self, msg ):
-        self.__init__( msg )
+        self.msg = msg
         self.status = 404
     
     def to_response( self ):

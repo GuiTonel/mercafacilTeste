@@ -1,6 +1,6 @@
 class ContactsNotFound(Exception):
     def __init__( self, msg ):
-        self.__init__( msg )
+        self.msg = msg
         self.status = 400
     
     def to_response( self ):
