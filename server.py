@@ -4,11 +4,10 @@ from flask import Flask
 
 API_PORT = 'API_PORT'
 FLASK_DEBUG = 'FLASK_DEBUG'
-SERVER_CONFIG_FILENAME = 'SERVER_CONFIG_FILENAME'
-FLASK_INSTANCE_RELATIVE_CONFIG = 'FLASK_INSTANCE_RELATIVE_CONFIG'
 
 def create_app():
-    load_dotenv('.env')
+    if not os.environ.get("FLASK_ENV", None):
+        load_dotenv('.env')
 
     app = Flask(__name__)
 

@@ -24,18 +24,6 @@ class BaseModel(DatabaseConnector):
             except Exception as e:
                 raise e
 
-    def to_dict(self) -> dict:
-        try:
-            data = self.__dict__
-            if '_sa_instance_state' in data:
-                del data['_sa_instance_state']
-            return data
-        except Exception as e:
-            raise e
-    
-    def bound_session( self, session ):
-        self._sa_instance_state.session_id = session.hash_key
-
     @classmethod
     def from_dict(cls, dict):
         model = cls()
@@ -46,12 +34,6 @@ class BaseModel(DatabaseConnector):
         finally:
             return model
 
-    def __repr__(self):
-        return str(self.__dict__)
-
-    def __str__(self):
-        return str(self.__dict__)
-        
     @classmethod
     def search(cls, **kwargs):
         try:

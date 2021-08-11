@@ -52,17 +52,17 @@ class DatabaseConnector:
 
     @classmethod
     def __config(cls) -> None:
-        database_url = f"{os.environ.get('DB_ENGINE')}://" \
-                       f"{os.environ.get('DB_USER')}:" \
-                       f"{os.environ.get('DB_PASS')}@" \
-                       f"{os.environ.get('DB_SERVER')}:" \
-                       f"{os.environ.get('DB_PORT')}/" \
-                       f"{os.environ.get('DB_NAME')}"
+        database_url = f"{os.getenv('MAIN_DB_ENGINE')}://" \
+                       f"{os.getenv('MAIN_DB_USER')}:" \
+                       f"{os.getenv('MAIN_DB_PASS')}@" \
+                       f"{os.getenv('MAIN_DB_SERVER')}:" \
+                       f"{os.getenv('MAIN_DB_PORT')}/" \
+                       f"{os.getenv('MAIN_DB_NAME')}"
         try:
             cls.__engine = create_engine( 
                             database_url, 
-                            pool_size = int(os.environ.get('DB_POOL_SIZE')), 
-                            max_overflow=int(os.environ.get('DB_MAX_OVERFLOW')) 
+                            pool_size = int(os.getenv('DB_POOL_SIZE')), 
+                            max_overflow=int(os.getenv('DB_MAX_OVERFLOW')) 
                            )
             cls.__sessionmaker = sessionmaker( cls.__engine, expire_on_commit=False )
             cls.__base = declarative_base()

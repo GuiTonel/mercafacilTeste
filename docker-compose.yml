@@ -1,0 +1,80 @@
+version: '3'
+
+services:
+  db: 
+    image: postgres
+    container_name: main
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: "admin"
+      POSTGRES_USER: "admin"
+      POSTGRES_DB: "mercafacil"
+
+  mysql:
+    image: mysql:8.0
+    container_name: macapa
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: admin
+      MYSQL_DATABASE: macapa
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: admin
+    ports:
+      - "3306:3306"
+    command: mysqld --lower_case_table_names=1 --skip-ssl --character_set_server=utf8mb4 --explicit_defaults_for_timestamp
+
+  postgresql:
+    image: postgres
+    container_name: varejao
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_PASSWORD: "admin"
+      POSTGRES_USER: "admin"
+      POSTGRES_DB: "varejao"
+
+  api:
+    depends_on:
+      - db
+      - postgresql
+      - mysql
+    build: "."
+    container_name: api
+    restart: always
+    environment:
+      API_PORT: 3333
+      FLASK_ENV: "production"
+      FLASK_DEBUG: 1
+
+      SECRET_KEY: "super_secret"
+      CODE_ALGORITHM: "HS256"
+
+      MAIN_DB_ENGINE: "postgresql"
+      MAIN_DB_USER: "admin"
+      MAIN_DB_PASS: "admin"
+      MAIN_DB_SERVER: "main"
+      MAIN_DB_PORT: 5432
+      MAIN_DB_NAME: "mercafacil"
+
+      MYSQL_DB_ENGINE: "mysql+pymysql"
+      MYSQL_USER: "admin"
+      MYSQL_PASSWORD: "admin"
+      MYSQL_ROOT_PASSWORD: "admin"
+      MYSQL_DB_SERVER: "macapa"
+      MYSQL_DB_PORT: 3306
+      MYSQL_DATABASE_NAME: "macapa"
+
+      POSTGRES_DB_ENGINE: "postgresql"
+      POSTGRES_USER: "admin"
+      POSTGRES_PASSWORD: "admin"
+      POSTGRES_DB_SERVER: "varejao"
+      POSTGRES_DB_PORT: 5433
+      POSTGRES_DATABASE_NAME: "varejao"
+      
+      DB_POOL_SIZE: 2
+      DB_MAX_OVERFLOW: 5
+
+    ports:
+      - "3333:3333"
+  
